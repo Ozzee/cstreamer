@@ -2,4 +2,20 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  table
+   tr
+    td
+      div(id="videoDiv")
+         p Loading...
+   tr
+    td(valign="top")
+      div(id="videoControls")
+        p Select a video to load:
+          select(id="videoSelection" onchange="loadVideo();")
+            option(value="ylLzyHk54Z0" selected) YouTube API Overview
+            option(value="muLIPWjks_M") Ninja Cat
+            option(value="GMUlhuTkM3w") Beatboxing Flute
+    tr
+      td
+        input(id="time")
+        button(onclick="jumpTo();") Jump
