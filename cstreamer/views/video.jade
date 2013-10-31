@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1= video
+  div(class="row")
+    input(id="video-id" type="hidden" value= video)
+    div(class="col-md-8")
+      div(id="videoDiv")
+        p Loading...
+        iframe(id="ytplayer" type="text/html" width="100%" src="http://www.youtube.com/embed/M7lc1UVf-VE?controls=0&enablejsapi=1&modestbranding=1&rel=0&showinfo=0" frameborder="0" allowfullscreen)
+
+    div(class="col-md-4")
+      h3 Controls
+      input(id="time" class="form-control")
+      button(class="btn" onclick="jumpTo();") Jump
+      br
+      button(class="btn" onclick="playVideo();") Play
+      button(class="btn" onclick="pauseVideo();") Pause
+
+      h3 Status
+      table(class="table")
+        tr
+          td Position
+          td(id="table-position")
+
+        tr
+          td Length
+          td(id="table-length")
+
+        tr
+          td Volume
+          td(id="table-volume")
