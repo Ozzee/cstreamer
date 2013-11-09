@@ -5,3 +5,7 @@ body {
 a {
   color: #00b7ff;
 }
+#time {
+  width: 100px;
+  display: inline;
+}
