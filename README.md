@@ -19,6 +19,13 @@ Start the application with:
 
     $ node app.js
 
+Deployment
+==========
+
+To deploy to heroku:
+
+    $ git push heroku master
+
 LICENSE
 =======
 
