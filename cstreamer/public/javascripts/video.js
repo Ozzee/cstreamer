@@ -48,7 +48,7 @@ function onYouTubePlayerReady(playerId) {
 
   $("#btn-play").click(player.play);
   $("#btn-pause").click(player.pause);
-  $("#btn-jump").click(function(){player.jump($("#time"))});
+  $("#btn-jump").click(function(){player.jump($("#time").val())});
 
 }
 
