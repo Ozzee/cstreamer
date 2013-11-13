@@ -7,8 +7,12 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+var cache = require('./modules/cache')();
 
 var app = express();
+
+
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);

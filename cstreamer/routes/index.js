@@ -1,3 +1,4 @@
+var cache = require('../modules/cache')();
 
 /*
  * GET home page.
@@ -11,6 +12,17 @@ exports.index = function(req, res){
  * GET video page: /<videoid>
  */
 exports.video = function(req, res){
-    console.log(req.ip)
+
+    var clients = cache.get(req.params.id);
+    if (clients=== undefined){
+        clients = []
+        console.log("No clients")
+    }
+
+    if (clients.indexOf(req.ip)<0)
+        clients.push(req.ip)
+
+    cache.set(req.params.id, clients)
+    console.log(clients)
     res.render('video', {title: 'Title', video: req.params.id});
 };
