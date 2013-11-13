@@ -56,10 +56,38 @@ function onPlayerError(errorCode) {
   console.log("An error occured of type:" + errorCode);
 }
 
+function initWebRtc() {
+    rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], "someRoom");
+    
+    if(PeerConnection) {
+        rtc.createStream({
+            "video": {"mandatory": {}, "optional": []},
+            "audio": false
+        }, function(stream) {
+        });
+    } else {
+        alert('no WebRTC support');
+    }
+    
+    rtc.on('data stream data', function(channel, data) {
+        console.log(data);
+        alert(data);
+    });
+}
+
+function sendMessage(message) {
+    for(var connection in rtc.dataChannels) {
+        var channel = rtc.dataChannels[connection];
+        channel.send(message);
+    }
+}
+
 $(document).ready(function(){
     var params = { allowScriptAccess: "always" };
     var atts = { id: "ytPlayer" };
     swfobject.embedSWF("http://www.youtube.com/apiplayer?" +
                      "version=3&enablejsapi=1&playerapiid=player1", 
                      "videoDiv", "480", "295", "9", null, null, params, atts);
+    
+    initWebRtc();
 });
