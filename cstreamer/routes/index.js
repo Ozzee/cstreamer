@@ -24,5 +24,5 @@ exports.video = function(req, res){
 
     cache.set(req.params.id, clients)
     console.log(clients)
-    res.render('video', {title: 'Title', video: req.params.id});
+    res.render('video', {title: 'Title', video: req.params.id, clients: clients});
 };
