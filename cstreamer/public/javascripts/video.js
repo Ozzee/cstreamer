@@ -3,13 +3,14 @@
  */
 
 function onYouTubePlayerReady(playerId) {
-  ytplayer = document.getElementById("ytPlayer");
+  ytplayer = document.getElementById("ytplayer");
 
   var player = {
     updateInfo: function(){
                   $("#table-length").html(ytplayer.getDuration().toFixed(2));
                   $("#table-position").html(ytplayer.getCurrentTime().toFixed(2));
                   $("#table-volume").html(ytplayer.getVolume());
+                  $("input#time").val(ytplayer.getCurrentTime()/ytplayer.getDuration()*100);
     },
     setVolume: function(volume){
                   if(!isNaN(volume)){
@@ -48,7 +49,10 @@ function onYouTubePlayerReady(playerId) {
 
   $("#btn-play").click(player.play);
   $("#btn-pause").click(player.pause);
-  $("#btn-jump").click(function(){player.jump($("#time").val())});
+  $("input#time").change(function(){
+    var percent = $("#time").val();
+    player.jump(percent/100.0 * ytplayer.getDuration());
+  });
 
 }
 
@@ -84,10 +88,10 @@ function sendMessage(message) {
 
 $(document).ready(function(){
     var params = { allowScriptAccess: "always" };
-    var atts = { id: "ytPlayer" };
+    var atts = { id: "ytplayer" };
     swfobject.embedSWF("http://www.youtube.com/apiplayer?" +
-                     "version=3&enablejsapi=1&playerapiid=player1", 
-                     "videoDiv", "480", "295", "9", null, null, params, atts);
+                     "version=3&enablejsapi=1&playerapiid=player1&wmode=opaque", 
+                     "videoDiv", "100%", "100%", "9", null, null, params, atts);
     
     initWebRtc();
 });
