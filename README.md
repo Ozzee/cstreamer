@@ -28,6 +28,10 @@ To deploy to heroku:
 
     $ git push heroku master
 
+To enable websockets:
+
+    $ heroku labs:enable websockets
+
 LICENSE
 =======
 
