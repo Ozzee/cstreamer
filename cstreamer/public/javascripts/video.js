@@ -5,7 +5,7 @@
 function onYouTubePlayerReady(playerId) {
   ytplayer = document.getElementById("ytplayer");
 
-  var player = {
+  player = {
     updateInfo: function(){
                   $("#table-length").html(ytplayer.getDuration().toFixed(2));
                   $("#table-position").html(ytplayer.getCurrentTime().toFixed(2));
@@ -47,11 +47,22 @@ function onYouTubePlayerReady(playerId) {
 
   ytplayer.cueVideoById($("#video-id").val());
 
-  $("#btn-play").click(player.play);
-  $("#btn-pause").click(player.pause);
+  $("#btn-play").click(function(){
+    sendMessage({play: "play"});
+    player.play();
+  });
+
+  $("#btn-pause").click(function(){
+    sendMessage({play: "pause"});
+    player.pause();
+  });
+
   $("input#time").change(function(){
     var percent = $("#time").val();
-    player.jump(percent/100.0 * ytplayer.getDuration());
+    var time = percent/100.0 * ytplayer.getDuration();
+    
+    sendMessage({time: time});
+    player.jump(time);
   });
 
 }
@@ -75,14 +86,23 @@ function initWebRtc() {
     
     rtc.on('data stream data', function(channel, data) {
         console.log(data);
-        alert(data);
+    
+        var obj=eval("("+data+")");
+        if(obj.time){
+          player.jump(obj.time);
+        } else if (obj.play) {
+          if (obj.play === "play")
+            player.play();
+          else if (obj.play === "pause")
+            player.pause();
+        }
     });
 }
 
 function sendMessage(message) {
     for(var connection in rtc.dataChannels) {
         var channel = rtc.dataChannels[connection];
-        channel.send(message);
+        channel.send(JSON.stringify(message));
     }
 }
 

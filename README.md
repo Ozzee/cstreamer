@@ -19,6 +19,8 @@ Start the application with:
 
     $ node app.js
 
+For local development using two tabs you can connect one tab to the localhost-address and one to the local IP-address.
+
 Deployment
 ==========
 

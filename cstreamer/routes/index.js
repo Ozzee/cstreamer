@@ -23,6 +23,15 @@ exports.video = function(req, res){
         clients.push(req.ip)
 
     cache.set(req.params.id, clients)
-    console.log(clients)
     res.render('video', {title: 'Title', video: req.params.id, clients: clients});
 };
+
+exports.videoClients = function(req, res) {
+
+    var clients = cache.get(req.params.id);
+    if (clients=== undefined){
+        clients = []
+    }
+    
+    res.json({clients: clients});
+}
