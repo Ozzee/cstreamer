@@ -29,3 +29,18 @@ block content
         tr
           td Volume
           td(id="table-volume")
+
+    div(id="div-debug" class="col-md-4")
+      h3 Debug
+      table(class="table")
+        tr
+          td My ID
+          td(id="table-myid")
+
+        tr
+          td Peers
+          td(id="table-peers")
+
+block javascripts
+  script(src="/javascripts/webrtc.io.js")
+  script(src='/javascripts/video.js')

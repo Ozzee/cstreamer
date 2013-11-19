@@ -11,6 +11,8 @@ function onYouTubePlayerReady(playerId) {
                   $("#table-position").html(ytplayer.getCurrentTime().toFixed(2));
                   $("#table-volume").html(ytplayer.getVolume());
                   $("input#time").val(ytplayer.getCurrentTime()/ytplayer.getDuration()*100);
+                  $("#table-myid").html(rtc._me);
+                  $("#table-peers").html(getPeerIds().join(" ,"));
     },
     setVolume: function(volume){
                   if(!isNaN(volume)){
@@ -45,7 +47,7 @@ function onYouTubePlayerReady(playerId) {
 
   ytplayer.addEventListener("onError", "onPlayerError");
 
-  ytplayer.cueVideoById($("#video-id").val());
+  ytplayer.cueVideoById(getVideoId());
 
   $("#btn-play").click(function(){
     sendMessage({play: "play"});
@@ -72,7 +74,7 @@ function onPlayerError(errorCode) {
 }
 
 function initWebRtc() {
-    rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], "someRoom");
+    rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], "videoroom-" + getVideoId());
     
     if(PeerConnection) {
         rtc.createStream({
@@ -104,6 +106,14 @@ function sendMessage(message) {
         var channel = rtc.dataChannels[connection];
         channel.send(JSON.stringify(message));
     }
+}
+
+function getPeerIds() {
+    return Object.keys(rtc.peerConnections);
+}
+
+function getVideoId() {
+    return $("#video-id").val();
 }
 
 $(document).ready(function(){
