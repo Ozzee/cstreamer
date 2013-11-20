@@ -5,6 +5,21 @@
 function onYouTubePlayerReady(playerId) {
   ytplayer = document.getElementById("ytplayer");
 
+  function updateIcon(){
+    $("#btn-play span").removeClass("glyphicon-play");
+    $("#btn-play span").removeClass("glyphicon-pause");
+    $("#btn-play span").removeClass("glyphicon-exclamation-sign");
+
+    var status = ytplayer.getPlayerState();
+    if (status == 1){
+      $("#btn-play span").addClass("glyphicon-pause");
+    } else if (status == 2) {
+      $("#btn-play span").addClass("glyphicon-play");
+    } else {
+      $("#btn-play span").addClass("glyphicon-exclamation-sign");
+    }
+}
+
   player = {
     updateInfo: function(){
                   $("#table-length").html(ytplayer.getDuration().toFixed(2));
@@ -13,15 +28,8 @@ function onYouTubePlayerReady(playerId) {
                   $("input#time").val(ytplayer.getCurrentTime()/ytplayer.getDuration()*100);
                   $("#table-myid").html(rtc._me);
                   $("#table-peers").html(getPeerIds().join(" ,"));
+                  updateIcon();
 
-                  var status = ytplayer.getPlayerState();
-                  if (status == 1){
-                    $("#btn-play").css("glyphicon glyphicon-pause");
-                  } else if (status == 2) {
-                    $("#btn-play").css("glyphicon glyphicon-play");
-                  } else {
-                    $("#btn-play").css("glyphicon glyphicon-exclamation-sign");
-                  }
     },
     setVolume: function(volume){
                   if(!isNaN(volume)){
@@ -37,10 +45,12 @@ function onYouTubePlayerReady(playerId) {
     play: function(){
       sendMessage({play: "play"});
       ytplayer.playVideo();
+      updateIcon();
     },
     pause: function(){
       sendMessage({play: "pause"});
       ytplayer.pauseVideo();
+      updateIcon();
     },
     toggle: function(){
       if (ytplayer.getPlayerState() == 1){
