@@ -13,6 +13,15 @@ function onYouTubePlayerReady(playerId) {
                   $("input#time").val(ytplayer.getCurrentTime()/ytplayer.getDuration()*100);
                   $("#table-myid").html(rtc._me);
                   $("#table-peers").html(getPeerIds().join(" ,"));
+
+                  var status = ytplayer.getPlayerState();
+                  if (status == 1){
+                    $("#btn-play").css("glyphicon glyphicon-pause");
+                  } else if (status == 2) {
+                    $("#btn-play").css("glyphicon glyphicon-play");
+                  } else {
+                    $("#btn-play").css("glyphicon glyphicon-exclamation-sign");
+                  }
     },
     setVolume: function(volume){
                   if(!isNaN(volume)){
@@ -26,10 +35,21 @@ function onYouTubePlayerReady(playerId) {
                   }
     },
     play: function(){
+      sendMessage({play: "play"});
       ytplayer.playVideo();
     },
     pause: function(){
+      sendMessage({play: "pause"});
       ytplayer.pauseVideo();
+    },
+    toggle: function(){
+      if (ytplayer.getPlayerState() == 1){
+        sendMessage({play: "pause"});
+        ytplayer.pauseVideo();
+      } else {
+        sendMessage({play: "play"});
+        ytplayer.playVideo();
+      }
     },
     mute: function(){
       ytplayer.muteVideo();
@@ -50,13 +70,7 @@ function onYouTubePlayerReady(playerId) {
   ytplayer.cueVideoById(getVideoId());
 
   $("#btn-play").click(function(){
-    sendMessage({play: "play"});
-    player.play();
-  });
-
-  $("#btn-pause").click(function(){
-    sendMessage({play: "pause"});
-    player.pause();
+    player.toggle();
   });
 
   $("input#time").change(function(){

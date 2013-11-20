@@ -13,8 +13,9 @@ block content
       input(id="video-id" type="hidden" value= video)
       input(id="time" type="range" step="1" min=0 max=100 class="" )
       br
-      button(class="btn btn-primary" id="btn-play") Play
-      button(class="btn btn-info" id="btn-pause") Pause
+      button(class="btn btn-primary" id="btn-play")
+        span(class="glyphicon glyphicon-play")
+      //- button(class="btn btn-info" id="btn-pause") Pause
 
       h3 Status
       table(class="table")
