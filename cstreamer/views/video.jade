@@ -1,46 +1,54 @@
 extends layout
 
 block content
-  div(class="row")
-    div(class="col-md-8")
-      div(id="tube-container")
-        div(id="videoDiv")
-          p Loading...
-          iframe(id="ytplayer" type="text/html" width="100%" src="http://www.youtube.com/embed/M7lc1UVf-VE?controls=0&enablejsapi=1&modestbranding=1&rel=0&showinfo=0&wmode=opaque" frameborder="0" allowfullscreen)
-    
-    div(id="div-controls" class="col-md-4")
-      h3 Controls
+  //- button(id="btn-duplicate" class="btn btn-primary")
+  //-   span(class="glyphicon glyphicon-reload")
+
+  div(id="video-clone")
+    div(id="video-div2")
+      iframe(id="ytplayer-clone" type="text/html" src="http://www.youtube.com/embed/M7lc1UVf-VE?controls=0&enablejsapi=1&modestbranding=1&rel=0&showinfo=0&wmode=opaque" frameborder="0" allowfullscreen)
+  
+  div(id="controls-wrapper")
+    div(id="div-controls" class="")
       input(id="video-id" type="hidden" value= video)
       input(id="time" type="range" step="1" min=0 max=100 class="" )
-      br
+      
       button(class="btn btn-primary" id="btn-play")
         span(class="glyphicon glyphicon-play")
-      //- button(class="btn btn-info" id="btn-pause") Pause
 
-      h3 Status
-      table(class="table")
-        tr
-          td Position
-          td(id="table-position")
+      a(href="#" id="hidden-toggle") [Debug]
+    
+    div(id="hidden-wrapper")
+      div(id="div-debug" class="")
+        h3 Debug
 
-        tr
-          td Length
-          td(id="table-length")
+        table(class="table")
+          tr
+            td Position
+            td(id="table-position")
 
-        tr
-          td Volume
-          td(id="table-volume")
+          tr
+            td Length
+            td(id="table-length")
 
-    div(id="div-debug" class="col-md-4")
-      h3 Debug
-      table(class="table")
-        tr
-          td My ID
-          td(id="table-myid")
+          tr
+            td Volume
+            td(id="table-volume")
 
-        tr
-          td Peers
-          td(id="table-peers")
+          tr
+            td My ID
+            td(id="table-myid")
+
+          tr
+            td Peers
+            td(id="table-peers")
+  
+  div(id="video-primary")
+    div(id="video-div")
+      p Loading...
+      iframe(id="ytplayer" type="text/html" src="http://www.youtube.com/embed/M7lc1UVf-VE?controls=0&enablejsapi=1&modestbranding=1&rel=0&showinfo=0&wmode=opaque&html5=1" frameborder="0" allowfullscreen)
+
+
 
 block javascripts
   script(src="/javascripts/webrtc.io.js")

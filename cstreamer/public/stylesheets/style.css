@@ -1,5 +1,6 @@
 body {
-  padding: 50px;
+  padding: 0;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: #000;
 }
@@ -7,14 +8,25 @@ a {
   color: #00b7ff;
 }
 #time {
-  width: 100px;
+  width: 300px;
   display: inline;
 }
-#tube-container {
-  width: 100%;
+#video-primary {
   height: 100%;
 }
-#div-controls,
-#div-debug {
-  background-color: #e4e4e4;
+#video-clone {
+  height: 50%;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+}
+#controls-wrapper {
+  background-color: rgba(0,0,0,0.9);
+  border-radius: 4px;
+  color: #fff;
+}
+#btn-duplicate {
+  z-index: 20;
+  top: 0;
+  right: 0;
+  position: absolute;
 }

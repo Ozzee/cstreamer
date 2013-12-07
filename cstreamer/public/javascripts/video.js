@@ -3,14 +3,15 @@
  */
 
 function onYouTubePlayerReady(playerId) {
-  ytplayer = document.getElementById("ytplayer");
+  var players = Array(document.getElementById("ytplayer"), document.getElementById("ytplayer2"));
+  players[1].mute();
 
   function updateIcon(){
     $("#btn-play span").removeClass("glyphicon-play");
     $("#btn-play span").removeClass("glyphicon-pause");
     $("#btn-play span").removeClass("glyphicon-exclamation-sign");
 
-    var status = ytplayer.getPlayerState();
+    var status = players[0].getPlayerState();
     if (status == 1){
       $("#btn-play span").addClass("glyphicon-pause");
     } else if (status == 2) {
@@ -18,66 +19,48 @@ function onYouTubePlayerReady(playerId) {
     } else {
       $("#btn-play span").addClass("glyphicon-exclamation-sign");
     }
-}
+  }
 
   player = {
     updateInfo: function(){
-                  $("#table-length").html(ytplayer.getDuration().toFixed(2));
-                  $("#table-position").html(ytplayer.getCurrentTime().toFixed(2));
-                  $("#table-volume").html(ytplayer.getVolume());
-                  $("input#time").val(ytplayer.getCurrentTime()/ytplayer.getDuration()*100);
+                  $("#table-length").html(players[0].getDuration().toFixed(2));
+                  $("#table-position").html(players[0].getCurrentTime().toFixed(2));
+                  $("#table-volume").html(players[0].getVolume());
+                  $("input#time").val(players[0].getCurrentTime()/players[0].getDuration()*100);
                   $("#table-myid").html(rtc._me);
                   $("#table-peers").html(getPeerIds().join(" ,"));
                   updateIcon();
-
-    },
-    setVolume: function(volume){
-                  if(!isNaN(volume)){
-                    if (volume<0){
-                      ytplayer.setVolume(0);
-                    } else if (volume>100){
-                      ytplayer.setVolume(100);
-                    } else {
-                      ytPlayer.setVolume(volume);
-                    }
-                  }
     },
     play: function(){
       sendMessage({play: "play"});
-      ytplayer.playVideo();
+      $(players).each(function(){this.playVideo()});
       updateIcon();
     },
     pause: function(){
       sendMessage({play: "pause"});
-      ytplayer.pauseVideo();
+      $(players).each(function(){this.pauseVideo()});
       updateIcon();
     },
     toggle: function(){
-      if (ytplayer.getPlayerState() == 1){
+      if (players[0].getPlayerState() == 1){
+        $(players).each(function(){this.pauseVideo()});
         sendMessage({play: "pause"});
-        ytplayer.pauseVideo();
       } else {
+        $(players).each(function(){this.playVideo()});
         sendMessage({play: "play"});
-        ytplayer.playVideo();
       }
     },
-    mute: function(){
-      ytplayer.muteVideo();
-    },
-    unMute: function(){
-      ytplayer.unMuteVideo();
-    },
     jump: function(time){
-      ytplayer.seekTo(parseInt(time));
+      $(players).each(function(){this.seekTo(parseInt(time));});
     }
 
   }
 
   setInterval(player.updateInfo, 250);
 
-  ytplayer.addEventListener("onError", "onPlayerError");
+  $(players).each(function(){this.addEventListener("onError", "onPlayerError");});
 
-  ytplayer.cueVideoById(getVideoId());
+  $(players).each(function(){this.cueVideoById(getVideoId());});
 
   $("#btn-play").click(function(){
     player.toggle();
@@ -91,6 +74,12 @@ function onYouTubePlayerReady(playerId) {
     player.jump(time);
   });
 
+  $("#video-clone").hide();
+  $("#btn-duplicate").click(function(){
+    $("#video-div").css("height", "50%");
+    $("#video-clone").css("height", "50%");
+    $("#video-clone").show();
+  });
 }
 
 function onPlayerError(errorCode) {
@@ -144,8 +133,21 @@ $(document).ready(function(){
     var params = { allowScriptAccess: "always" };
     var atts = { id: "ytplayer" };
     swfobject.embedSWF("http://www.youtube.com/apiplayer?" +
-                     "version=3&enablejsapi=1&playerapiid=player1&wmode=opaque", 
-                     "videoDiv", "100%", "100%", "9", null, null, params, atts);
+                     "version=3&enablejsapi=1&playerapiid=player1&wmode=opaque&html5=1", 
+                     "video-div", "100%", "100%", "9", null, null, params, atts);
+
+    var atts2 = { id: "ytplayer2" };
+    swfobject.embedSWF("http://www.youtube.com/apiplayer?" +
+                     "version=3&enablejsapi=1&playerapiid=player2&wmode=opaque&html5=1", 
+                     "video-div2", "100%", "100%", "9", null, null, params, atts2);
     
     initWebRtc();
+
+    $("#hidden-toggle").click(function(){
+      $("#hidden-wrapper").toggle();
+    });
+    $("#hidden-wrapper").toggle();
+
+
+
 });
