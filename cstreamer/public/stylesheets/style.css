@@ -23,6 +23,7 @@ a {
   background-color: rgba(0,0,0,0.9);
   border-radius: 4px;
   color: #fff;
+  text-align: center;
 }
 #btn-duplicate {
   z-index: 20;
