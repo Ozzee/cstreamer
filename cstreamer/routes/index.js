@@ -12,5 +12,5 @@ exports.index = function(req, res){
  * GET video page: /<videoid>
  */
 exports.video = function(req, res){
-  res.render('video', {title: 'Title', video: req.params.id, clients: clients});
+  res.render('video', {title: 'Title', video: req.params.id});
 };

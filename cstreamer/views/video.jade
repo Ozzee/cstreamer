@@ -1,21 +1,24 @@
 extends layout
 
 block content
-  div(class="row-fluid")
-    div(class="col-md-8")
-      div(id="tube-container")
-        div(id="iframe-placeholder")
+  //- button(id="btn-duplicate" class="btn btn-primary")
+  //-   span(class="glyphicon glyphicon-reload")
 
-    div(class="col-md-4")
-      div(id="div-controls")
-        h3 Controls
-        input(id="video-id" type="hidden" value= video)
-        input(id="time" type="range" step="1" min=0 max=100)
-        br
-        button(class="btn btn-primary" id="btn-play") Play
-        button(class="btn btn-info" id="btn-pause") Pause
+  
+  div(id="controls-wrapper")
+    div(id="div-controls" class="")
+      input(id="video-id" type="hidden" value= video)
+      input(id="time" type="range" step="1" min=0 max=100 class="" )
+      
+      button(class="btn btn-primary" id="btn-play")
+        span(class="glyphicon glyphicon-play")
 
-        h3 Status
+      a(href="#" id="hidden-toggle") [Debug]
+    
+    div(id="hidden-wrapper")
+      div(id="div-debug" class="")
+        h3 Debug
+
         table(class="table")
           tr
             td Position
@@ -29,8 +32,6 @@ block content
             td Volume
             td(id="table-volume")
 
-        h3 Debug
-        table(class="table")
           tr
             td My ID
             td(id="table-myid")
@@ -38,7 +39,11 @@ block content
           tr
             td Peers
             td(id="table-peers")
+  
+  div(id="video-primary")
+    div(id="iframe-placeholder")
+      p Loading...
 
 block javascripts
-  script(src='/javascripts/webrtc.io.js')
+  script(src="/javascripts/webrtc.io.js")
   script(src='/javascripts/video.js')

@@ -15,6 +15,15 @@ var player = {
         }
         $("#table-myid").html(rtc._me);
         $("#table-peers").html(getPeerIds().join(" ,"));
+
+        var status = ytplayer.getPlayerState();
+        if (status == 1){
+          $("#btn-play").css("glyphicon glyphicon-pause");
+        } else if (status == 2) {
+          $("#btn-play").css("glyphicon glyphicon-play");
+        } else {
+          $("#btn-play").css("glyphicon glyphicon-exclamation-sign");
+        }
     },
     setVolume: function(volume) {
         if(!isNaN(volume)){
@@ -32,6 +41,15 @@ var player = {
     },
     pause: function() {
         ytplayer.pauseVideo();
+    },
+    toggle: function(){
+        if (ytplayer.getPlayerState() == 1){
+          sendMessage({play: "pause"});
+          ytplayer.pauseVideo();
+        } else {
+          sendMessage({play: "play"});
+          ytplayer.playVideo();
+        }
     },
     mute: function() {
         ytplayer.muteVideo();
@@ -81,13 +99,13 @@ function onYouTubePlayerReady() {
     
     $("#btn-play").click(function(){
         sendMessage({play: "play"});
-        player.play();
+        player.toggle();
     });
     
-    $("#btn-pause").click(function(){
-        sendMessage({play: "pause"});
-        player.pause();
-    });
+    // $("#btn-pause").click(function(){
+    //     sendMessage({play: "pause"});
+    //     player.pause();
+    // });
     
     $("input#time").change(function(){
         var percent = $("#time").val();
@@ -144,4 +162,9 @@ function getPeerIds() {
 $(document).ready(function(){
     loadYouTubeIframeAPI();
     initWebRtc();
+
+    $("#hidden-toggle").click(function(){
+      $("#hidden-wrapper").toggle();
+    });
+    $("#hidden-wrapper").toggle();
 });

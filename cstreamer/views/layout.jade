@@ -4,9 +4,14 @@ html
     title= title
     link(href="/stylesheets/bootstrap.min.css" rel="stylesheet" media="screen")
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="//www.google.com/jsapi" type="text/javascript")
+    script.
+      google.load("swfobject", "2.1");
+    
 
   body
-    block content
+    div
+      block content
 
   script(src="//code.jquery.com/jquery.js")
   script(src="/javascripts/bootstrap.min.js")
