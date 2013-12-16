@@ -1,8 +1,7 @@
 extends layout
 
 block content
-  //- button(id="btn-duplicate" class="btn btn-primary")
-  //-   span(class="glyphicon glyphicon-reload")
+
 
   
   div(id="controls-wrapper")
@@ -40,9 +39,12 @@ block content
             td Peers
             td(id="table-peers")
   
-  div(id="video-primary")
+  div(id="hidden-video")
     div(id="iframe-placeholder")
       p Loading...
+  
+  div(id="video-container")
+    canvas(id="video-canvas")
 
 block javascripts
   script(src="/javascripts/webrtc.io.js")

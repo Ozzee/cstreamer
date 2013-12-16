@@ -76,12 +76,13 @@ function loadYouTubeIframeAPI() {
 function onYouTubeIframeAPIReady() {
   console.log('YouTube Iframe API loaded');
   ytplayer = new YT.Player('iframe-placeholder', {
-    height: '99%',
-    width: '100%',
+    height: '720',
+    width: '480',
     videoId: getVideoId(),
     playerVars: {
         controls: 0,
-        modestbranding: 1
+        modestbranding: 1,
+        html5: 1
     },
     events: {
       'onReady': onYouTubePlayerReady,
@@ -96,16 +97,49 @@ function onYouTubePlayerReady() {
     setInterval(player.updateInfo, 250);
     ytplayer.cueVideoById(getVideoId());
     
+    var iframe = document.getElementById("iframe-placeholder");
+    var doc = iframe.contentWindow.document;
+    html5video = doc.getElementsByClassName("html5-main-video")[0];
     
     $("#btn-play").click(function(){
         sendMessage({play: "play"});
         player.toggle();
     });
     
-    // $("#btn-pause").click(function(){
-    //     sendMessage({play: "pause"});
-    //     player.pause();
-    // });
+    var canvaselement = document.getElementById('video-canvas'),
+        canvas = canvaselement.getContext('2d'),
+        interval;
+
+    // Set canvas height and width to match the inner dimensions of the window -> full-screen
+    document.getElementById("video-canvas").width = window.innerWidth-3;
+    document.getElementById("video-canvas").height = window.innerHeight-3;
+    
+    var halfHeight = window.innerHeight/2;
+    var halfWidth = window.innerWidth/2;
+
+    function processFrame() {
+        canvas.save() // Save context to easily switch back
+
+        // Rotate 180deg
+        canvas.translate(halfWidth*2, halfHeight);
+        canvas.rotate(Math.PI);
+
+        // Draw upside down screens
+        canvas.drawImage(html5video, 0,         0,          halfWidth, halfHeight);
+        canvas.drawImage(html5video, halfWidth, 0,          halfWidth, halfHeight);
+
+        // Rotate back
+        canvas.restore()
+
+        // Draw right side up screens
+        canvas.drawImage(html5video, 0,         halfHeight, halfWidth, halfHeight);
+        canvas.drawImage(html5video, halfWidth, halfHeight, halfWidth, halfHeight);
+    }
+
+    html5video.addEventListener('play', function() {
+        clearInterval(interval);
+        interval = setInterval(processFrame, 40)
+    }, false);  
     
     $("input#time").change(function(){
         var percent = $("#time").val();
@@ -167,4 +201,11 @@ $(document).ready(function(){
       $("#hidden-wrapper").toggle();
     });
     $("#hidden-wrapper").toggle();
+
+    $("#btn-duplicate").click(function(){
+        $("#video-primary").css("-webkit-transform", "rotate(90deg)");
+    });
+
+    
+        
 });
