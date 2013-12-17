@@ -76,8 +76,8 @@ function loadYouTubeIframeAPI() {
 function onYouTubeIframeAPIReady() {
   console.log('YouTube Iframe API loaded');
   ytplayer = new YT.Player('iframe-placeholder', {
-    height: '720',
-    width: '480',
+    height: '1024',
+    width: '768',
     videoId: getVideoId(),
     playerVars: {
         controls: 0,
@@ -109,6 +109,11 @@ function onYouTubePlayerReady() {
     var canvaselement = document.getElementById('video-canvas'),
         canvas = canvaselement.getContext('2d'),
         interval;
+    var splitted = false;
+
+    $("#btn-split").click(function(){
+        splitted = !splitted;
+    });
 
     // Set canvas height and width to match the inner dimensions of the window -> full-screen
     document.getElementById("video-canvas").width = window.innerWidth-3;
@@ -118,22 +123,28 @@ function onYouTubePlayerReady() {
     var halfWidth = window.innerWidth/2;
 
     function processFrame() {
-        canvas.save() // Save context to easily switch back
 
-        // Rotate 180deg
-        canvas.translate(halfWidth*2, halfHeight);
-        canvas.rotate(Math.PI);
+        if (splitted) {
+            canvas.save() // Save context to easily switch back
 
-        // Draw upside down screens
-        canvas.drawImage(html5video, 0,         0,          halfWidth, halfHeight);
-        canvas.drawImage(html5video, halfWidth, 0,          halfWidth, halfHeight);
+            // Rotate 180deg
+            canvas.translate(halfWidth*2, halfHeight);
+            canvas.rotate(Math.PI);
 
-        // Rotate back
-        canvas.restore()
+            // Draw upside down screens
+            canvas.drawImage(html5video, 0,         0,          halfWidth, halfHeight);
+            canvas.drawImage(html5video, halfWidth, 0,          halfWidth, halfHeight);
 
-        // Draw right side up screens
-        canvas.drawImage(html5video, 0,         halfHeight, halfWidth, halfHeight);
-        canvas.drawImage(html5video, halfWidth, halfHeight, halfWidth, halfHeight);
+            // Rotate back
+            canvas.restore()
+
+            // Draw right side up screens
+            canvas.drawImage(html5video, 0,         halfHeight, halfWidth, halfHeight);
+            canvas.drawImage(html5video, halfWidth, halfHeight, halfWidth, halfHeight);
+        
+        } else {
+            canvas.drawImage(html5video, 0,         0,          window.innerWidth, window.innerHeight);
+        }
     }
 
     html5video.addEventListener('play', function() {
@@ -206,6 +217,6 @@ $(document).ready(function(){
         $("#video-primary").css("-webkit-transform", "rotate(90deg)");
     });
 
-    
+    $("#controls-wrapper").draggable();
         
 });
