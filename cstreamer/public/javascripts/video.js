@@ -76,20 +76,24 @@ function loadYouTubeIframeAPI() {
 function onYouTubeIframeAPIReady() {
   console.log('YouTube Iframe API loaded');
   ytplayer = new YT.Player('iframe-placeholder', {
-    height: '1024',
-    width: '768',
+    height: '768',
+    width: '1024',
     videoId: getVideoId(),
     playerVars: {
         controls: 0,
         modestbranding: 1,
-        html5: 1
+        html5: 1,
     },
     events: {
       'onReady': onYouTubePlayerReady,
       'onError': onYouTubePlayerError,
-      //'onStateChange': onPlayerStateChange
+      'onStateChange': onPlayerStateChange
     }
   });
+}
+
+function onPlayerStateChange(){
+    ytplayer.setPlaybackQuality('hd720');
 }
 
 function onYouTubePlayerReady() {
