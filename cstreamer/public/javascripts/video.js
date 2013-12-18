@@ -44,7 +44,7 @@ var player = {
     },
     toggle: function(){
         if (ytplayer.getPlayerState() == 1){
-          sendMessage({play: "pause"});
+          sendMessage({time: ytplayer.getCurrentTime(), play: "pause"});
           ytplayer.pauseVideo();
         } else {
           sendMessage({play: "play"});
@@ -58,6 +58,10 @@ var player = {
         ytplayer.unMuteVideo();
     },
     jump: function(time) {
+        var percent = $("#time").val();
+        var time = percent/100.0 * ytplayer.getDuration();
+        
+        sendMessage({time: time});
         ytplayer.seekTo(parseInt(time));
     }
 };
@@ -106,7 +110,6 @@ function onYouTubePlayerReady() {
     html5video = doc.getElementsByClassName("html5-main-video")[0];
     
     $("#btn-play").click(function(){
-        sendMessage({play: "play"});
         player.toggle();
     });
     
@@ -163,10 +166,6 @@ function onYouTubePlayerReady() {
     }, false);  
     
     $("input#time").change(function(){
-        var percent = $("#time").val();
-        var time = percent/100.0 * ytplayer.getDuration();
-        
-        sendMessage({time: time});
         player.jump(time);
     });
 }
@@ -193,8 +192,9 @@ function initWebRtc() {
     
         var obj=eval("("+data+")");
         if(obj.time){
-          player.jump(obj.time);
-        } else if (obj.play) {
+          ytplayer.seekTo(parseInt(obj.time));
+        }
+        if (obj.play) {
           if (obj.play === "play")
             player.play();
           else if (obj.play === "pause")
