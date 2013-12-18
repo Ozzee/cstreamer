@@ -2,11 +2,18 @@ extends layout
 
 block content
   h1= title
-  h2 Try some videos:
+  h2 Give an YouTube video ID:
+  input(type="text" id="video-id")
+  button(class="btn btn-primary" id="play-video")
+    span(class="glyphicon glyphicon-play")
+  h2 Or try some videos:
   ul
     li 
       a(href="/_72qXg5XlW8") [Glitch Hop / 110BPM] - Stephen Walking - Pizza Planet [Monstercat Release] 
     li
       a(href="9O5KkregjJw") Boston Dynamics: Wildcat - Electronic Cat 
     li
-      a(href="5N0Balj2tLw") The Atomic Cannon Devastation! Full HD!!! 
+      a(href="5N0Balj2tLw") The Atomic Cannon Devastation! Full HD!!!
+
+block javascripts
+  script(src='/javascripts/index.js')
