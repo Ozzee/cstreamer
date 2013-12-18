@@ -14,7 +14,9 @@ var player = {
           $("input#time").val(0);
         }
         $("#table-myid").html(rtc._me);
-        $("#table-peers").html(getPeerIds().join(" ,"));
+        $("#table-peers").html(getPeers().map(function(peer) {
+          return "[" + peer.readyState + " " + peer.id + "]";
+        }).join(" ,"));
 
         var status = ytplayer.getPlayerState();
         if (status == 1){
@@ -206,12 +208,26 @@ function initWebRtc() {
 function sendMessage(message) {
     for(var connection in rtc.dataChannels) {
         var channel = rtc.dataChannels[connection];
-        channel.send(JSON.stringify(message));
+        if(channel.readyState === "open") {
+          channel.send(JSON.stringify(message));
+        }
     }
 }
 
-function getPeerIds() {
-    return Object.keys(rtc.peerConnections);
+function getPeers() {
+    var peerConnections = rtc.peerConnections;
+    var peers = [];
+    for (var connectionId in peerConnections) {
+        if (peerConnections.hasOwnProperty(connectionId)) {
+            var dataChannel = rtc.dataChannels[connectionId];
+            var readyState;
+            if(dataChannel) {
+              readyState = dataChannel.readyState;
+            }
+            peers.push({id: connectionId, readyState: readyState});
+        }
+    }
+    return peers;
 }
 
 $(document).ready(function(){
