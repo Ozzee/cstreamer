@@ -18,11 +18,11 @@ var player = {
 
         var status = ytplayer.getPlayerState();
         if (status == 1){
-          $("#btn-play").css("glyphicon glyphicon-pause");
-        } else if (status == 2) {
-          $("#btn-play").css("glyphicon glyphicon-play");
+          $("#btn-play span").removeClass();
+          $("#btn-play span").addClass("glyphicon glyphicon-pause");
         } else {
-          $("#btn-play").css("glyphicon glyphicon-exclamation-sign");
+          $("#btn-play span").removeClass();
+          $("#btn-play span").addClass("glyphicon glyphicon-play");
         }
     },
     setVolume: function(volume) {
@@ -119,13 +119,19 @@ function onYouTubePlayerReady() {
         splitted = !splitted;
     });
 
-    // Set canvas height and width to match the inner dimensions of the window -> full-screen
-    document.getElementById("video-canvas").width = window.innerWidth-3;
-    document.getElementById("video-canvas").height = window.innerHeight-3;
+    var halfHeight, halfWidth;
     
-    var halfHeight = window.innerHeight/2;
-    var halfWidth = window.innerWidth/2;
+    function updateCanvasDimensions() {
+      // Set canvas height and width to match the inner dimensions of the window -> full-screen
+      document.getElementById("video-canvas").width = window.innerWidth-3;
+      document.getElementById("video-canvas").height = window.innerHeight-3;
+      
+      halfHeight = window.innerHeight/2;
+      halfWidth = window.innerWidth/2;
+    }
 
+    updateCanvasDimensions();
+    $(window).resize(function () { updateCanvasDimensions(); });
     function processFrame() {
 
         if (splitted) {
