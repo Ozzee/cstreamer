@@ -393,7 +393,7 @@ if (navigator.webkitGetUserMedia) {
                     rtc.fire('ready');
                 }
             }, function(error) {
-                alert("Could not connect stream.");
+                console.log("Could not connect stream.");
                 onFail(error);
             });
         } else {
