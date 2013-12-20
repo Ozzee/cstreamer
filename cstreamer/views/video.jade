@@ -1,13 +1,6 @@
 extends layout
 
 block content
-  //- button(id="btn-duplicate" class="btn btn-primary")
-  //-   span(class="glyphicon glyphicon-reload")
-
-  div(id="video-clone")
-    div(id="video-div2")
-      iframe(id="ytplayer-clone" type="text/html" src="http://www.youtube.com/embed/M7lc1UVf-VE?controls=0&enablejsapi=1&modestbranding=1&rel=0&showinfo=0&wmode=opaque" frameborder="0" allowfullscreen)
-  
   div(id="controls-wrapper")
     div(id="div-controls" class="")
       input(id="video-id" type="hidden" value= video)
@@ -15,6 +8,9 @@ block content
       
       button(class="btn btn-primary" id="btn-play")
         span(class="glyphicon glyphicon-play")
+
+      button(class="btn btn-primary" id="btn-split")
+        span(class="glyphicon glyphicon-th-large")
 
       a(href="#" id="hidden-toggle") [Debug]
     
@@ -43,12 +39,12 @@ block content
             td Peers
             td(id="table-peers")
   
-  div(id="video-primary")
-    div(id="video-div")
+  div(id="hidden-video")
+    div(id="iframe-placeholder")
       p Loading...
-      iframe(id="ytplayer" type="text/html" src="http://www.youtube.com/embed/M7lc1UVf-VE?controls=0&enablejsapi=1&modestbranding=1&rel=0&showinfo=0&wmode=opaque&html5=1" frameborder="0" allowfullscreen)
-
-
+  
+  div(id="video-container")
+    canvas(id="video-canvas")
 
 block javascripts
   script(src="/javascripts/webrtc.io.js")
