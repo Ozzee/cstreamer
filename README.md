@@ -4,6 +4,8 @@ README
 Note: You need to run Chrome in unsafe mode:
 google-chrome --disable-web-security
 
+On Ubuntu you may need to use chromium.
+
 Installation
 ============
 
