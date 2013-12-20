@@ -7,6 +7,9 @@ This is a small node app that displays YouTube videos. The gist of it being that
 
 You choose video by entering the ID on the fron page or by going to the http://service_url/ID. The page will show the video in fullscreen with controls on top. There is also an option to split the video into four parts in different directions to ease viewing on a table.
 
+A video of the service in action is available at: http://www.youtube.com/watch?v=ZpOnZnVbgHs
+unfortunately the microphone on the laptop did not work when recording.
+
 Notes
 ======
 
