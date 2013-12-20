@@ -1,6 +1,9 @@
 README
 ======
 
+Note: You need to run Chrome in unsafe mode:
+google-chrome --disable-web-security
+
 Installation
 ============
 
