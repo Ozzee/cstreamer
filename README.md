@@ -32,6 +32,8 @@ Usage
 Start the application with:
 
     $ node app.js
+    
+In the cstreamer folder.
 
 For local development using two tabs you can connect one tab to the localhost-address and one to the local IP-address.
 
