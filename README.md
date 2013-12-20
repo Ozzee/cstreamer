@@ -16,6 +16,10 @@ You need to run Chrome in unsafe mode:
 
 On Ubuntu you may need to use chromium.
 
+This is done so that the HTML5 video can be extracted from the iframe used by YouTube.
+
+You will also need to be a part of [YouTube's HTML5 beta](http://www.youtube.com/html5) in order to get the video in HTML5 instead of flash.
+
 
 Installation
 ============
