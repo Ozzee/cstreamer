@@ -5,7 +5,7 @@ A project by Tuure Savuoja and Oskar Ehnström for the course T-111.5350 Multime
 
 This is a small node app that displays YouTube videos. The gist of it being that when watching, the videos sync across all clients that are watchin via WebRTC. The idea is to have clients play their own streams and only sync relevant information peer to peer.
 
-You choose video by entering the ID on the fron page or by going to the http://<service url>/ID. The page will show the video in fullscreen with controls on top. There is also an option to split the video into four parts in different directions to ease viewing on a table.
+You choose video by entering the ID on the fron page or by going to the http://service_url/ID. The page will show the video in fullscreen with controls on top. There is also an option to split the video into four parts in different directions to ease viewing on a table.
 
 Notes
 ======
