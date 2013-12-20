@@ -1,10 +1,19 @@
-README
+CStreamer
+========
+
+A project by Tuure Savuoja and Oskar Ehnström for the course T-111.5350 Multimedia Programming at Aalto University.
+
+This is a small node app that displays YouTube videos. The gist of it being that when watching, the videos sync across all clients that are watchin via WebRTC. The idea is to have clients play their own streams and only sync relevant information peer to peer.
+
+Notes
 ======
 
-Note: You need to run Chrome in unsafe mode:
-google-chrome --disable-web-security
+You need to run Chrome in unsafe mode:
+    
+    $ google-chrome --disable-web-security
 
 On Ubuntu you may need to use chromium.
+
 
 Installation
 ============
@@ -36,6 +45,17 @@ To deploy to heroku:
 To enable websockets:
 
     $ heroku labs:enable websockets
+    
+Libraries
+=========
+
+[jQuery](http://jquery.com/)
+
+[jQuery UI](http://jqueryui.com/)
+
+[webRTC.io](https://github.com/webRTC/webRTC.io)
+
+[Bootstrap](http://getbootstrap.com/)
 
 LICENSE
 =======
